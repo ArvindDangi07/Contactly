@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+     th:replace="~{normal/base :: layout(~{::content})}">
+    
+
+<section th:fragment="content">
+
+    <!-- Hero Section -->
+    <div class="bg-primary text-white p-5 rounded-4 shadow-lg mb-4"
+         style="background: linear-gradient(135deg, #4e54c8, #8f94fb);">
+        <h2 class="fw-bold">Welcome, <span th:text="${user.name}">User</span> 👋</h2>
+        <p class="mt-2 mb-0 fs-5 opacity-75">
+            Manage your contacts, update your profile, and explore your dashboard.
+        </p>
+    </div>
+
+    <!-- Dashboard Quick Stats -->
+    <div class="row g-4">
+
+        <!-- Card 1 -->
+        <div class="col-md-4">
+            <div class="p-4 shadow-sm rounded-4 bg-white border-hover"
+                 style="transition: all .3s;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold mb-1">Total Contacts</h4>
+                        <h2 class="fw-bold text-primary" th:text="${user.contacts.size()}">0</h2>
+                    </div>
+                    <i class="bi bi-people-fill text-primary display-5"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4">
+            <div class="p-4 shadow-sm rounded-4 bg-white border-hover"
+                 style="transition: all .3s;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold mb-1">Profile Status</h4>
+                        <h5 class="text-success fw-bold">Active</h5>
+                    </div>
+                    <i class="bi bi-person-badge-fill text-success display-5"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4">
+            <div class="p-4 shadow-sm rounded-4 bg-white border-hover"
+                 style="transition: all .3s;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold mb-1">Account Role</h4>
+                        <h5 class="text-info fw-bold" th:text="${user.role}">USER</h5>
+                    </div>
+                    <i class="bi bi-shield-lock-fill text-info display-5"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Contacts -->
+    <div class="mt-5">
+        <h3 class="fw-bold mb-3">Recent Contacts</h3>
+
+        <div class="list-group shadow-sm rounded-4">
+
+            <div th:each="c,stat : ${user.contacts}" 
+                 th:if="${stat.index < 5}"
+                 class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                
+                <div>
+                    <div class="fw-bold fs-5" th:text="${c.name}"></div>
+                    <small class="text-muted" th:text="${c.email}"></small>
+                </div>
+
+                <a th:href="@{/user/contact/{cId}(cId=${c.cId})}"
+                   class="btn btn-primary btn-sm rounded-pill px-3">
+                    View
+                </a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(user.contacts)}"
+                 class="p-3 text-center text-muted">
+                No contacts added yet.
+            </div>
+
+        </div>
+
+        <div class="text-end mt-3">
+            <a href="/user/add_contact" class="btn btn-outline-primary rounded-pill px-4">
+                + Add New Contact
+            </a>
+        </div>
+    </div>
+
+</section>
+
+
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:fragment="layout(content)">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="${title}">Smart Contact Manager</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
+	integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class=" fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">Contactly</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto text-uppercase">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+
+              
+                <li class="nav-item"> 
+                    <a class="nav-link" href="#"
+                   
+                    ><span th:text="${user != null ? user.name : 'User'}"></span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" href="#">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- ================= NAVBAR END ================= -->
+
+<!-- ================= SIDEBAR ================= -->
+
+
+<!-- ================= CONTENT AREA ================= -->
+<div class="content">
+   <div th:replace="~{::content}"></div>
+   
+</div>
+
+<!-- jQuery + Popper + Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script th:src="@{/js/script.js}"></script>
+
+<script>
+    const sidebar = document.querySelector(".sidebar");
+    const content = document.querySelector(".content");
+    const crossBtn = document.querySelector(".crossBtn");
+    const toggleBtn = document.querySelector(".toggle-btn");
+
+    // ✅ Sidebar close
+    crossBtn.addEventListener("click", () => {
+        sidebar.classList.add("closed");
+        content.classList.add("expanded");
+        toggleBtn.style.display = "block"; // show hamburger
+    });
+
+    // ✅ Sidebar open
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.remove("closed");
+        content.classList.remove("expanded");
+        toggleBtn.style.display = "none"; // hide hamburger
+    });
+</script>
+
+
+
+</body>
+</html>

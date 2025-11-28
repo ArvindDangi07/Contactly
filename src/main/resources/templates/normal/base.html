@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+th:fragment="layout(content)">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title th:text="${title}">Contactly</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
+	integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class=" fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a  th:href="@{/user/index}" class="navbar-brand" href="/">Contactly</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto text-uppercase">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/index}">Home</a>
+                </li>
+
+               
+             		 <li class="nav-item">
+					    <a class="nav-link" th:href="@{/user/profile}">
+					        <span th:text="${user != null ? user.name : 'User'}"></span>
+					    </a>
+					</li>
+               
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" href="#">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- ================= NAVBAR END ================= -->
+
+<!-- ================= SIDEBAR ================= -->
+<button class="toggle-btn"><i class="fas fa-bars"></i></button>
+
+<div class="sidebar" >
+    <span class="crossBtn">&times;</span>
+
+    <a th:href="@{/user/index}" class="item"><i class="fas fa-home"></i>Home</a>
+    <a th:href="@{/user/show_contacts/0}" class="item"><i class="fas fa-id-badge"></i>View Contacts</a>
+    <a th:href="@{/user/add_contact}" class="item"><i class="fas fa-plus-square"></i>Add Contact</a>
+    <a th:href="@{/user/profile}" class="item"><i class="fa-solid fa-person"></i>Your Profile</a>
+    <a th:href="@{/user/setting}" class="item"><i class="fas fa-users-cog"></i>Settings</a>
+    <a th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt"></i>Logout</a>
+
+    <div class="divider"></div>
+</div>
+
+
+<!-- ================= CONTENT AREA ================= -->
+
+
+	
+	<!-- message box -->
+<div th:if="${session.message}" class="container mt-2">
+
+    <div class="alert text-center"
+         th:classappend="'alert-' + ${session.message.type}"
+         role="alert">
+
+        <span th:text="${session.message.content}"></span>
+    </div>
+
+</div>
+	
+	
+
+
+
+
+<div class="content">
+    <div th:replace="${content}"></div>
+</div>
+
+<!-- jQuery + Popper + Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script th:src="@{/js/script.js}"></script>
+
+<script>
+    const sidebar = document.querySelector(".sidebar");
+    const content = document.querySelector(".content");
+    const crossBtn = document.querySelector(".crossBtn");
+    const toggleBtn = document.querySelector(".toggle-btn");
+
+    // ✅ Sidebar close
+    crossBtn.addEventListener("click", () => {
+        sidebar.classList.add("closed");
+        content.classList.add("expanded");
+        toggleBtn.style.display = "block"; // show hamburger
+    });
+
+    // ✅ Sidebar open
+    toggleBtn.addEventListener("click", () => {
+        sidebar.classList.remove("closed");
+        content.classList.remove("expanded");
+        toggleBtn.style.display = "none"; // hide hamburger
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function confirmDelete(cid, page) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This contact will be permanently deleted!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "/user/delete/" + cid + "/" + page;
+        }
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: layout(~{::content})}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>This is Home Page</title>
+</head>
+
+<body>
+
+<div th:fragment="content">
+    <h1>Welcome to Smart Contact Manager</h1>
+    <p>This is the homepage loaded using the base layout.</p>
+</div>
+
+</body>
+</html>

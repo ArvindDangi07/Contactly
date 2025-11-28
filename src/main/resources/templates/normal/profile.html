@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base :: layout(~{::content})}">
+
+<head>
+    <title>User Profile</title>
+
+    <!-- EXTRA Premium CSS -->
+    <style>
+       
+    </style>
+</head>
+
+<section th:fragment="content">
+
+    <!-- Top gradient header -->
+    <div class="profile-header"></div>
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <!-- Profile Image -->
+            <img th:src="@{'/img/' + ${user.imageUrl}}"
+                 class="profile-img" alt="User Image">
+
+            <h2 class="mt-3 fw-bold" th:text="${user.name}">User Name</h2>
+            <p class="text-muted" th:text="${user.role}">Role</p>
+
+           
+        </div>
+
+        <!-- User Information -->
+        <div class="profile-card mt-4">
+
+            <h3 class="section-title mb-3">Profile Information</h3>
+
+            <div class="row mb-3">
+                <div class="col-md-4 info-label">Email</div>
+                <div class="col-md-8 info-value" th:text="${user.email}"></div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 info-label">Account Status</div>
+                <div class="col-md-8 info-value">
+                    <span th:text="${user.enabled ? 'Active' : 'Disabled'}"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 info-label">About</div>
+                <div class="col-md-8 info-value" th:text="${user.about}"></div>
+            </div>
+
+        </div>
+
+        <!-- Contact List -->
+        <div class="profile-card mt-4">
+            <h3 class="section-title mb-3">Saved Contacts</h3>
+
+            <div th:each="c : ${user.contacts}">
+                <div class="d-flex justify-content-between py-3 border-bottom">
+                    <div>
+                        <div class="fw-bold" th:text="${c.name}"></div>
+                        <div class="text-muted" th:text="${c.email}"></div>
+                    </div>
+                    <div class="text-end">
+                       <a th:href="@{/user/contact/{cId}(cId=${c.cId})}" 
+  							 class="badge bg-primary text-white">View</a>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</html>

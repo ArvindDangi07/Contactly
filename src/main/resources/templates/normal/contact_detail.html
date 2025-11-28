@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base :: layout(~{::content})}">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${contact.name + ' | Contact Detail'}">Contact Detail</title>
+
+    <link rel="stylesheet" th:href="@{/css/contact_detail.css}">
+</head>
+
+<body>
+<section th:fragment="content">
+
+    <!-- Show only if contact exists -->
+    <div class="contact-card mt-4" th:if="${contact != null}">
+
+        <div class="profile-section text-center">
+            <img th:src="@{'/image/' + ${contact.image}}"
+                 alt="Profile Photo"
+                 class="profile-img" />
+            <h2 th:text="${contact.name + ' ' + contact.secondName}"></h2>
+            <span class="job" th:text="${contact.work}"></span>
+        </div>
+
+        <hr>
+
+        <div class="info-field">
+            <span class="label">Contact ID:</span>
+            <span th:text="${'SCM2025' + contact.cId}"></span>
+        </div>
+
+        <div class="info-field">
+            <span class="label">Email:</span>
+            <span th:text="${contact.email}"></span>
+        </div>
+
+        <div class="info-field">
+            <span class="label">Phone:</span>
+            <span th:text="${contact.phone}"></span>
+        </div>
+
+        <div class="info-field">
+            <span class="label">Description:</span>
+            <p th:text="${contact.description}"></p>
+        </div>
+
+        <div class="btn-group">
+            <a th:href="@{'/user/show_contacts/0'}" class="btn-back">Back</a>
+            <form method="post" th:action="@{'/user/update-contact/' + ${contact.cId}}">
+		    <button type="submit" class="btn btn-block btn-primary btn-sm">Update</button>
+		</form>
+				
+            <a href="#"
+			   th:onclick="'confirmDelete(' + ${contact.cId} + ',0);'"
+			   class="btn btn-danger btn-sm">
+			   Delete
+			</a>
+			            
+        </div>
+    </div>
+
+    <!-- Permission / not found message -->
+    <h1 class="text-center p-3 bg-danger"
+        th:if="${contact == null}">
+        You don’t have permission to see this contact...
+    </h1>
+
+</section>
+</body>
+</html>

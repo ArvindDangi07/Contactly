@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: layout(~{::content})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/auth-style.css}">
+</head>
+
+<body>
+<div th:fragment="content">
+
+    <!-- FULL SCREEN LOGIN -->
+    <div class="auth-full">
+
+        <!-- GLASS CARD -->
+        <div class="auth-box">
+            <h2 class="auth-title">Welcome Back</h2>
+            <p class="auth-subtitle">Login to your account</p>
+
+            <!-- ERROR MESSAGE -->
+            <div th:if="${param.error}" class="alert alert-danger">
+                Invalid username or password
+            </div>
+
+            <!-- LOGOUT MESSAGE -->
+            <div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form th:action="@{/do_login}" method="post">
+                <div class="auth-group">
+                    <label>Email</label>
+                    <input type="text" name="username" placeholder="you@example.com" required>
+                </div>
+
+                <div class="auth-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="auth-btn">Login</button>
+            </form>
+
+            <!-- LINKS -->
+            <div class="auth-links">
+                <a th:href="@{/signup}">Create new account</a> | 
+                <a th:href="@{/forgot-password}">Forgot Password?</a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

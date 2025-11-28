@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: layout(~{::content})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" th:href="@{/css/auth-style.css}">
+</head>
+
+<body>
+<div th:fragment="content">
+
+    <!-- FULL SCREEN SIGNUP -->
+    <div class="auth-full">
+
+        <!-- GLASS CARD -->
+        <div class="auth-box">
+
+            <!-- SIGNUP ICON / LOGO -->
+            <div class="signup-icon">
+                <img src="/image/signup-icon.png" alt="Signup Icon">
+            </div>
+
+            <h2 class="auth-title">Create Account</h2>
+            <p class="auth-subtitle">Sign up to start your journey</p>
+
+            <!-- SIGNUP FORM -->
+            <form th:action="@{/do_register}" method="post" th:object="${user}">
+                <div class="auth-group">
+                    <label>Name</label>
+                    <input type="text" th:field="*{name}" placeholder="Your Name" required>
+                </div>
+
+                <div class="auth-group">
+                    <label>Email</label>
+                    <input type="email" th:field="*{email}" placeholder="you@example.com" required>
+                </div>
+
+                <div class="auth-group">
+                    <label>Password</label>
+                    <input type="password" th:field="*{password}" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="auth-btn">Sign Up</button>
+            </form>
+
+            <div class="auth-links">
+                <a th:href="@{/login}">Already have an account? Login</a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

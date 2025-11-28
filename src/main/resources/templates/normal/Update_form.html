@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{normal/base :: layout(~{::content})}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Update Contact</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+  
+
+</head>
+
+<body>
+
+<section th:fragment="content">
+
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 p-4 rounded-4 premium-card w-100" style="max-width: 700px;">
+
+        <h2 class="page-title text-center">Update Contact</h2>
+
+       <!-- Profile Photo Section -->
+			<div class="photo-container text-center mb-4">
+			
+			    <!-- Circular Image -->
+			    <img th:src="@{'/img/' + ${contact.image}}"
+			         class="profile-pic"
+			         alt="Image">
+			
+			    <!-- Change Photo Button -->
+			    <label for="contactImage" class="change-btn btn btn-primary btn-sm mt-2">
+			        Change Photo
+			    </label>
+			
+			</div>
+			       
+			        
+			
+        <form th:object="${contact}"
+              method="post"
+              th:action="@{/user/process-update}"
+              enctype="multipart/form-data">
+              
+			    <!-- Hidden File Input -->
+			    <input type="file" id="contactImage" name="contactImage" class="d-none" />
+
+            <!-- Hidden photo input -->
+          
+            <input type="hidden" th:value="${contact.cId}" name="cId" />
+
+            <!-- First Name -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">First Name</label>
+                <div class="input-group">
+                    <span class="input-group-text premium-icon"><i class="fas fa-user"></i></span>
+                    <input th:field="*{name}" type="text" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Last Name</label>
+                <div class="input-group">
+                    <span class="input-group-text premium-icon"><i class="fas fa-user-tag"></i></span>
+                    <input th:field="*{secondName}" type="text" class="form-control">
+                </div>
+            </div>
+
+            <!-- Work -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Profession / Work</label>
+                <div class="input-group">
+                    <span class="input-group-text premium-icon"><i class="fas fa-briefcase"></i></span>
+                    <input th:field="*{work}" type="text" required class="form-control">
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text premium-icon"><i class="fas fa-envelope"></i></span>
+                    <input th:field="*{email}" type="email" required class="form-control">
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Phone</label>
+                <div class="input-group">
+                    <span class="input-group-text premium-icon"><i class="fas fa-phone"></i></span>
+                    <input th:field="*{phone}" type="text" required class="form-control">
+                </div>
+            </div>
+
+            <!-- Description -->
+          <div class="mb-3">
+		    <label class="form-label fw-semibold">Description / Notes</label>
+		
+		    <!-- Icon -->
+		    <div class="mb-2">
+		        <span class="input-group-text premium-icon" style="width:45px;">
+		            <i class="fas fa-comment"></i>
+		        </span>
+		    </div>
+		
+		    <!-- TinyMCE textarea full width -->
+		    <textarea id="description" th:field="*{description}" class="form-control"></textarea>
+		</div>
+          
+
+            <!-- Submit -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-submit px-5 py-2 fw-semibold">
+                    Update Contact
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.tiny.cloud/1/amg1lx8zffnlxed522pw7wtoj38k319k08sli7tdz4i9almq/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '#description',
+    height: 200,
+    menubar: false
+  });
+</script>
+
+</section>
+
+</body>
+</html>
